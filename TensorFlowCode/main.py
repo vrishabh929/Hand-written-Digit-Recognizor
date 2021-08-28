@@ -14,8 +14,8 @@ tf.config.experimental.set_memory_growth(physical_devices[0], True)
     "mnist",
     split=["train", "test"],
     shuffle_files=False,
-    as_supervised=True,  # will return tuple (img, label) otherwise dict
-    with_info=True,  # able to get info about dataset
+    as_supervised=True,  
+    with_info=True,  
 )
 
 @tf.function
@@ -46,7 +46,7 @@ def augment(image, label):
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 BATCH_SIZE = 32
 
-# Setup for train dataset
+
 ds_train = ds_train.cache()
 ds_train = ds_train.shuffle(ds_info.splits["train"].num_examples)
 ds_train = ds_train.map(normalize_img, num_parallel_calls=AUTOTUNE)
@@ -54,7 +54,7 @@ ds_train = ds_train.map(augment, num_parallel_calls=AUTOTUNE)
 ds_train = ds_train.batch(BATCH_SIZE)
 ds_train = ds_train.prefetch(AUTOTUNE)
 
-# Setup for test Dataset
+
 ds_test = ds_test.map(normalize_img, num_parallel_calls=AUTOTUNE)
 ds_test = ds_test.batch(BATCH_SIZE)
 ds_test = ds_test.prefetch(AUTOTUNE)
